@@ -2,9 +2,10 @@
   "name": "friendfinder",
   "version": "1.0.0",
   "description": "",
-  "main": "htmlRoutes.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,6 @@
   "homepage": "https://github.com/mc4tech/FriendFinder#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
-    "express": "^4.15.4",
-    "path": "^0.12.7"
+    "express": "^4.15.4"
   }
 }
