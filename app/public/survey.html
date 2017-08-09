@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
-	<title>Friend Finder Fullstack</title>
+	<meta charset="UTF-8">
+	<title>FriendFinder</title>
 
-	<meta charset="UTF-8"><!-- Latest compiled and minified CSS & JS -->
+	<!-- Latest compiled and minified CSS & JS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-	<!-- Font Awesome-->
+	<!-- Font Awesome Glyphicons -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
 	<!-- Chosen -->
-	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
 
 </head>
 <body>
@@ -27,6 +27,22 @@
 			<h4>Link to Photo Image (Required)</h4>
 			<input type="text" name id="photo" class="form-control" required>
 		</div>
+	</div>
+	<br><br>
+	
+	<div class="container">
+		
+		<button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i> Submit</button><br><br>
+
+		<footer class= "footer">
+	 	<div class="row links" style="margin-left: 15px;">
+			<p>
+		 		<a href="/api/friends">API Friends List</a>
+		 		 | 
+			    <a href="https://github.com/mc4tech/FriendFinder">GitHub Repo</a>
+		    </p>
+	 	</div>
+ 	</footer>
 	</div>
 	<script type="text/javascript" src="../data/questions.js"></script>
 	<script type="text/javascript" src="../data/friends.js"></script>

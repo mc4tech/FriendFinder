@@ -33,55 +33,64 @@ $(document).ready(function() {
 		}
 	}
 
-	//creates the options and elements needed for options while appending them to the questions
-	function createOptions() {
+	//creates the select elements needed for options while appending them to the questions
+	function createSelectEl() {
 		for(var i = 0; i < questions.length; i ++){
 			var qNum = ("Question " + (i + 1));
-			var optDiv = document.createElement("div");
-			var optBtn = document.createElement("button");
-			var optList = document.createElement("ul");
-			var btnText = document.createTextNode("Select an Option");
+			var selectId = ("q" + (i + 1));
+			var selectEl = document.createElement("select");
+			var attributes = ["data-placeholder", "class", "id"];
+			var values = ["", "chosen-select", selectId];
 			var x = document.getElementById(qNum);
-			var menu = ("dropdownMenu" + (i+1));
-			var attributes = ["class", "type", "id", "data-toggle", "aria-haspopup", "aria-expanded"];
-			var values = ["btn btn-default dropdown-toggle", "button", menu, "dropdown", "true", "true"];
-			optList.setAttribute("class", "dropdown-menu");
-			optList.setAttribute("aria-labelledby", menu);
-			optBtn.appendChild(btnText);
-			optDiv.appendChild(optList);
-			optDiv.setAttribute("class", "dropdown");
-			optDiv.appendChild(optBtn);
-			x.appendChild(optDiv);
+			x.appendChild(selectEl);
 
 			for(var j = 0; j < attributes.length; j ++) {
-				optBtn.setAttribute(attributes[j], values[j]);
+				selectEl.setAttribute(attributes[j], values[j]);
 			}
-			createList();
-
+			createOptEl(selectEl);
+			chosenDiv(x, i);
 		}
 	}
-	function createList() {
-		for(var m = 1; m <= 5; m++) {
-				var count = 1;
-				var list = document.createElement("li");
-				var rating;
-				console.log(rating);
-				if(count === 1){
-					rating = document.createTextNode(1 + "Strongly Disagree");
-					// rating.appendChild(disagree); 
-					console.log(rating);
-					count++;
-				}else if (count === 5) {
-					rating = document.createTextNode(5 + "Strongly Agree");
+
+	//creates the list of options 1(Strongly Disagree)-5(Strongly Agree)
+	function createOptEl(selectEl) {
+		for(var i = 0; i <= 5; i++) {
+			var optEl = document.createElement("option");
+			if(i === 0) {
+				optEl.setAttribute("value", "");
+			}else{
+				optEl.setAttribute("value", i);
+				if( i === 1) {
+					var t = document.createTextNode("1 (Strongly Disagree)");
+					optEl.appendChild(t);
+				}else if(i === 5) {
+					var t = document.createTextNode("5 (Strongly Agree)");
+					optEl.appendChild(t);
 				}else{
-					rating = document.createTextNode(m);
+					var t = document.createTextNode(i);
+					optEl.appendChild(t);
 				}
-				count++;
-				list.appendChild(rating);
-				optList.appendChild(list);
 			}
+			selectEl.appendChild(optEl);
+		}
 	}
+
+	function chosenDiv(x, i) {
+
+		var div = document.createElement("div");
+		var chosenId = ("q" + i + "_chosen");
+		var attributes = ["class", "id", "style"];
+		var values = ["chosen-container chosen-container-single", chosenId, "width: 5%"];
+		x.appendChild(div);
+		for(var j = 0; j < attributes.length; j ++) {
+			div.setAttribute(attributes[j], values[j]);
+		}
+	}
+
+	// call this first to create question divs
 	createQDivs();
+	//call this next to append and display questions
 	displayQuestions();
-	createOptions();
+	//call this third to create divs to hold the options
+	createSelectEl();
 });
