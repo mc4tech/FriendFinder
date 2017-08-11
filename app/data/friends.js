@@ -1,4 +1,4 @@
-[
+var friendsArray = [
 	{
 		"name": "Eliot",
 		"photo": "http://ksassets.timeincuk.net/wp/uploads/sites/55/2017/06/mrrobot_s2_cast_rami-malek2.jpg",
@@ -19,4 +19,6 @@
 		"photo": "http://www.usanetwork.com/sites/usanetwork/files/styles/full_episodes_633x356/public/2016/06/mrrobot_s2_cast_carly-chaikin.jpg?itok=WEWLIz3F",
 		"scores": ["3", "3", "4", "2", "2", "1", "3", "2", "2", "3"]
 	}
-]
+];
+
+module.exports = friendsArray;
