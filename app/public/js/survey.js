@@ -1,6 +1,72 @@
 $(document).ready(function() {
 
-	console.log("hey");
+	// Chosen CSS
+    var config = {
+      '.chosen-select'           : {},
+      '.chosen-select-deselect'  : {allow_single_deselect:true},
+      '.chosen-select-no-single' : {disable_search_threshold:10},
+      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+      '.chosen-select-width'     : {width:"95%"}
+    }
+    for (var selector in config) {
+      $(selector).chosen(config[selector]);
+    }
+
+    // Capture the form inputs 
+    $("#submit").on("click", function(){
+
+    	// Form validation
+    	function validateForm() {
+		  var isValid = true;
+		  $('.form-control').each(function() {
+		    if ( $(this).val() === '' )
+		        isValid = false;
+		  });
+
+		  $('.chosen-select').each(function() {
+
+		  	if( $(this).val() === "")
+		  		isValid = false
+		  })
+		  return isValid;
+		}
+
+		// If all required fields are filled
+		if (validateForm() == true)
+		{
+			// Create an object for the user's data
+	    	var userData = {
+	    		name: $("#name").val(),
+	    		photo: $("#photo").val(),
+	    		scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val(), ]
+	    	}
+
+
+	    	// Grab the URL of the website
+	    	var currentURL = window.location.origin;
+
+	    	// AJAX post the data to the friends API. 
+	    	$.post(currentURL + "/api/friends", userData, function(data){
+
+	    		// Grab the result from the AJAX post so that the best match's name and photo are displayed.
+	    		$("#matchName").text(data.name);
+	    		$('#matchImg').attr("src", data.photo);
+
+		    	// Show the modal with the best match 
+		    	$("#resultsModal").modal('toggle');
+
+	    	});
+		}
+		else
+		{
+			alert("Please fill out all fields before submitting!");
+		}
+    	
+    	return false;
+    });
+
+
+	//creates the divs that hold each question and corresponding element
 	function createQDivs (){
 		for(var i = 0; i < questions.length; i++){			
 			var qNum = ("Question " + (i + 1));
@@ -18,13 +84,14 @@ $(document).ready(function() {
 		}
 	}
 
-	//loops through the questions obj and appends the questions to the corresponding q number
+	//loops through the questions obj creates a h4 element and appends the questions to the corresponding q number
 	function displayQuestions() {
 		for(var i = 0; i < questions.length; i ++){
 			var q = document.createTextNode(questions[i].question);
 			var qNum = ("Question " + (i + 1));
 			var qHead = document.createElement("h4");
 			qHead.appendChild(q);
+			//question div
 			var x = document.getElementById(qNum);
 			// console.log(x);
 			x.appendChild(qHead);
@@ -33,7 +100,7 @@ $(document).ready(function() {
 		}
 	}
 
-	//creates the select elements needed for options while appending them to the questions
+	//creates the select elements needed for options while appending them to the questions header
 	function createSelectEl() {
 		for(var i = 0; i < questions.length; i ++){
 			var qNum = ("Question " + (i + 1));
@@ -41,19 +108,27 @@ $(document).ready(function() {
 			var selectEl = document.createElement("select");
 			var attributes = ["data-placeholder", "class", "id"];
 			var values = ["", "chosen-select", selectId];
+			//question div
 			var x = document.getElementById(qNum);
 			x.appendChild(selectEl);
 
+			//loops through attributes and values array setting attributes for the select element
 			for(var j = 0; j < attributes.length; j ++) {
 				selectEl.setAttribute(attributes[j], values[j]);
 			}
+			//the selectEL is passed to append the options to
 			createOptEl(selectEl);
-			chosenDiv(x, i);
+			//passes the question div and i variable to the chosenDiv function.
+			//the question div is used to append the chosen div to.
+			//the i variable is passed to help set the chosen div id keeping it inline with question number
+			// chosenDiv(x, i);
 		}
 	}
 
 	//creates the list of options 1(Strongly Disagree)-5(Strongly Agree)
 	function createOptEl(selectEl) {
+		//loops through creating a blank option for user input and 5 others with the 1st and 5th 
+		//labled to give example of rating
 		for(var i = 0; i <= 5; i++) {
 			var optEl = document.createElement("option");
 			if(i === 0) {
@@ -75,17 +150,19 @@ $(document).ready(function() {
 		}
 	}
 
-	function chosenDiv(x, i) {
+	//creates a div to hold the 
+	// function chosenDiv(x, i) {
 
-		var div = document.createElement("div");
-		var chosenId = ("q" + i + "_chosen");
-		var attributes = ["class", "id", "style"];
-		var values = ["chosen-container chosen-container-single", chosenId, "width: 5%"];
-		x.appendChild(div);
-		for(var j = 0; j < attributes.length; j ++) {
-			div.setAttribute(attributes[j], values[j]);
-		}
-	}
+	// 	var div = document.createElement("div");
+	// 	var chosenId = ("q" + (i + 1) + "_chosen");
+	// 	var attributes = ["class", "id", "style"];
+	// 	var values = ["chosen-container chosen-container-single", chosenId, "width: 5%"];
+	// 	//appends the created div to the question div id passed to it
+	// 	x.appendChild(div);
+	// 	for(var j = 0; j < attributes.length; j ++) {
+	// 		div.setAttribute(attributes[j], values[j]);
+	// 	}
+	// }
 
 	// call this first to create question divs
 	createQDivs();
